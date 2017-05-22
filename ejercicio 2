@@ -1,0 +1,32 @@
+	.data
+cad1: .asciiz "Introduce el un entero: "
+cad2: .asciiz "Introduce el otro entero: "
+	.globl main
+	.text
+main:
+	li $v0, 4	#imprimo la cadena de a0 por cad1
+	la $a0, cad1
+	syscall
+
+	li $v0, 5	#cargo el entero 1
+	syscall
+	move $t0, $v0 	#guardo el entero 1 en t0
+	
+	li $v0, 4	#imprimo la cadena de a0 por cad2
+	la $a0, cad2
+	syscall
+
+	li $v0, 5	#cargo el entero 2
+	syscall
+	move $t1, $v0	#guardo el entero 2  en t1
+	
+	slt $t2, $t0, $t1	#comparo en t2
+	move $a0, $t2		#muevo el registro a a0
+	li $v0, 1		#imprimo: 
+				#entero 1 < entero 2 me sale un 1
+				#entero 1 > entero 2 me sale un 0	
+	syscall
+	
+	li $v0, 10	#FIN DEL PROGRAMA
+	syscall
+	

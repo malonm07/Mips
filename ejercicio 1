@@ -1,0 +1,109 @@
+	.data
+cad1:	.asciiz "introduzca un entero:"
+cad2:	.asciiz "introduzca otro entero:"
+suma:	.asciiz "el resultado de la suma de los enteros es:"
+resta:	.asciiz "la resta de los enteros es:"
+producto:	.asciiz "el producto de los enteros es:"
+cociente:	.asciiz "el cociente de los enteros es:"
+resto:	.asciiz "el resto de los enteros es:"
+salto:	.asciiz "\n"
+result:	.space 4 #espacio para almacenar el resultado
+	.globl main #declaro etiqueta
+	.text
+main:
+	li $v0,4 #llamada al sistema que imprime la cadena de a0 por cad1
+	la $a0, cad1
+	syscall
+	
+	li $v0,5 #cargo el entero 1
+	syscall
+	move $t0, $v0 #guardo en t0 el entero de la cadena1
+	
+	li $v0, 4 #llamada al sistema que imprime la cadena de a0 por cad2
+	la $a0,cad2
+	syscall
+	
+	li $v0, 5 #cargo el entero 2
+	syscall
+	move $t1, $v0 #guardo en t1 el entero de la cadena
+	
+#SUMA----------------------------------------------------------
+	add $t2, $t1, $t0 #guardo la suma en t2
+	li $v0,4 #leemos la cadena
+	la $a0, suma
+	syscall
+	
+	move $a0, $t2 #pasamos la cadena de t2 a a0
+	li $v0,1 
+	syscall
+	
+	li $v0,4
+	la $a0,salto
+	syscall
+#RESTA-----------------------------------------
+	
+	sub $t2, $t0,$t1 #guardo la resta en t2
+	li $v0, 4 #leemos cadena
+	la $a0, resta
+	syscall
+	
+	move $a0, $t2 #pasamos la cadena de t2 a a0
+	li $v0, 1
+	syscall
+	
+	li $v0, 4
+	la $a0, salto
+	syscall
+	
+#PRODUCTO------------------------------------------
+	
+	mult $t0, $t1 #guardo el producto en t2
+	mflo $t2
+	li $v0, 4
+	la $a0, producto
+	syscall
+	
+	move $a0, $t2 #pasamos la cadema de t2 a a0
+	li $v0, 1
+	syscall
+	
+	li $v0, 4
+	la $a0, salto
+	syscall
+	
+#COCIENTE------------------------------------------
+	
+	div $t0, $t1
+	mflo $t2
+	li $v0,4
+	la $a0,cociente
+	syscall
+	
+	move $a0, $t2
+	li $v0,1
+	syscall
+	
+	li $v0,4
+	la $a0, salto
+	syscall
+	
+#RESTO--------------------------------------------
+
+	div $t0,$t1
+	mfhi $t2
+	li $v0, 4
+	la $a0, resto
+	syscall
+	
+	move $a0, $t2
+	li $v0, 1
+	syscall
+	
+	li $v0,4
+	la $a0, salto
+	syscall
+	
+#FINAL---------------------------------------------
+
+	li $v0,10 #final
+	syscall
